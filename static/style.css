@@ -1,37 +1,98 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg, #1e1e2f, #2c2c54);
+    color: white;
     text-align: center;
-    background: #f4f4f4;
 }
 
-.container {
-    margin-top: 20px;
-}
-
-button {
-    padding: 10px;
-    margin: 10px;
-    cursor: pointer;
+.hero {
+    padding: 40px;
 }
 
 .card {
-    background: white;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 8px;
+    margin: 20px auto;
+    padding: 20px;
+    width: 60%;
+    border-radius: 20px;
+}
+
+.glass {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #6c5ce7;
+    color: white;
+    cursor: pointer;
+}
+
+.preview {
+    width: 200px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.pill {
     display: inline-block;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 8px 12px;
+    margin: 5px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
 }
 
 #colorBox {
     width: 120px;
     height: 120px;
-    margin: 10px auto;
+    margin: auto;
     line-height: 120px;
-    color: white;
-    font-weight: bold;
+    border-radius: 10px;
+}
+
+.chat {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 .hidden {
     display: none;
+}
+/* 🔥 FULLSCREEN LOADING OVERLAY */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    color: white;
+}
+
+/* 🔥 SPINNER */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.2);
+    border-top: 6px solid #6c5ce7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+/* 🔁 ANIMATION */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

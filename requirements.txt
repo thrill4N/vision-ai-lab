@@ -4,3 +4,5 @@ python-dotenv
 pillow
 numpy
 openai
+scikit-learn
+faiss-cpu
