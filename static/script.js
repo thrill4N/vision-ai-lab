@@ -1,20 +1,13 @@
 let lastData = null;
 
 async function analyze() {
-    const fileInput = document.getElementById("fileInput");
-    const file = fileInput.files[0];
+    const file = document.getElementById("fileInput").files[0];
+    if (!file) return alert("Upload image");
 
-    if (!file) {
-        alert("Please upload an image");
-        return;
-    }
-
-    // Preview
     document.getElementById("preview").innerHTML =
-        `<img src="${URL.createObjectURL(file)}" width="200">`;
+        `<img src="${URL.createObjectURL(file)}" class="preview">`;
 
-    document.getElementById("loading").classList.remove("hidden");
-    document.getElementById("results").classList.add("hidden");
+    document.getElementById("loadingOverlay").classList.remove("hidden");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -25,50 +18,44 @@ async function analyze() {
     });
 
     const data = await res.json();
+
+   if (data.error) {
+    document.getElementById("loadingOverlay").classList.add("hidden");
+    alert(data.error);
+    return;
+}
+
     lastData = data;
 
     document.getElementById("loading").classList.add("hidden");
     document.getElementById("results").classList.remove("hidden");
 
-    // Predictions
-    const predDiv = document.getElementById("predictions");
-    predDiv.innerHTML = "";
-
+    let html = "";
     data.predictions.forEach(p => {
-        predDiv.innerHTML += `
-            <div class="card">
-                ${p.label} - ${(p.score * 100).toFixed(2)}%
-            </div>
-        `;
+        html += `<div class="pill">${p.label} (${(p.score*100).toFixed(1)}%)</div>`;
     });
 
-    // Color
+    document.getElementById("predictions").innerHTML = html;
+    document.getElementById("caption").innerText = data.caption;
+
     const colorBox = document.getElementById("colorBox");
     colorBox.style.background = data.color;
     colorBox.innerText = data.color;
+
+    document.getElementById("comparison").innerText = data.comparison;
 }
 
 async function askAI() {
-    const question = document.getElementById("question").value;
-
-    if (!question || !lastData) {
-        alert("Analyze an image first and enter a question");
-        return;
-    }
+    const q = document.getElementById("question").value;
 
     const res = await fetch("/ask", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            question: question,
-            predictions: lastData.predictions,
-            color: lastData.color
-        })
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({...lastData, question: q})
     });
 
     const data = await res.json();
 
-    document.getElementById("aiAnswer").innerText = data.answer;
+    document.getElementById("chat").innerHTML +=
+        `<div class="chat"><b>You:</b> ${q}<br><b>AI:</b> ${data.answer}</div>`;
 }
