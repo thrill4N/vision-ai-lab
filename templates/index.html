@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vision AI Lab</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>Vision AI Lab</h1>
+<p>Upload an image and ask AI about it</p>
+
+<div class="container">
+
+    <input type="file" id="fileInput">
+    <button onclick="analyze()">Analyze</button>
+
+    <div id="preview"></div>
+
+    <div id="loading" class="hidden">Analyzing image...</div>
+
+    <div id="results" class="hidden">
+        <h2>Predictions</h2>
+        <div id="predictions"></div>
+
+        <h3>Dominant Color</h3>
+        <div id="colorBox"></div>
+
+        <h3>Ask AI about this image</h3>
+        <input type="text" id="question" placeholder="e.g. What is this used for?">
+        <button onclick="askAI()">Ask AI</button>
+
+        <p id="aiAnswer"></p>
+    </div>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
